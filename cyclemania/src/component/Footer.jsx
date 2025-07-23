@@ -1,12 +1,16 @@
-import React from 'react'
+import React from 'react';
 
 function Footer() {
   return (
-    <div className='bg-gray-300 sm:h-7 md:h-10 lg:h-15 w-[100%] flex justify-around items-center p-2'>
-      <h1 className='sm:text-[1rem] md:text-[1.15rem] lg:text-[1.3rem]'>Copyright(c) 2025 EasyCycle</h1>
-      <h1 className='sm:text-[1rem] md:text-[1.15rem] lg:text-[1.3rem]'>Made with ❤ by Priyabrata</h1>
+    <div className='bg-[#006F65] w-full flex flex-col items-center justify-center p-4'>
+      <h1 className='text-white font-bold text-center sm:text-[1rem] md:text-[1.15rem] lg:text-[1.3rem]'>
+        Copyright © 2025 CycleMate
+      </h1>
+      <p className='text-white font-bold text-center sm:text-sm md:text-base'>
+        Made with ❤ by Sachin Kumar Jaiswal
+      </p>
     </div>
-  )
+  );
 }
 
 export default Footer;
