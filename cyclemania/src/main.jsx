@@ -4,7 +4,7 @@ import './index.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { FirebaseProvider } from './context/firebase.jsx'
 import App from './App.jsx'
-import Header from './component/Header.jsx'
+// import Header from './component/Header.jsx'
 import About from './component/About.jsx'
 import FAQs from './component/FAQs.jsx'
 import Footer from './component/Footer.jsx'
@@ -19,7 +19,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <FirebaseProvider>
       <BrowserRouter>
-        <Header />
+        {/* <Header /> */}
         <Toaster />
         <Routes>
           <Route path='/' element={<App />} />

@@ -3,7 +3,7 @@ import { FirebaseContext } from '../context/firebase.jsx'
 import { onAuthStateChanged } from 'firebase/auth'
 import user_img from '../assets/user_img.jpg'
 import { useNavigate } from 'react-router-dom'
-
+import Header from './Header.jsx'
 function Dashboard() {
 
     const context = useContext(FirebaseContext);
@@ -27,8 +27,9 @@ function Dashboard() {
     }, []);
 
     return (
+        <>
+            <Header/>
         <div className='w-[97%] h-auto mt-22 relative ml-2 md:ml-5 flex flex-col items-center'>
-
             <div className='rounded-2xl w-[90%] md:w-[80%] h-auto min-h-[12rem] mt-5 relative flex flex-col items-center justify-center gap-5 p-4 md:flex-row md:justify-evenly md:items-center bg-gray-200 shadow-xl transition-transform duration-200 hover:scale-102'>
                 <img src={img || user_img} alt="Profile Image" className=' h-[5rem] rounded-full md:h-[7rem] lg:h-[10rem]' />
                 <div className='min-w-[50%] min-h-[10rem] flex flex-col justify-center items-start gap-3'>
@@ -84,6 +85,7 @@ function Dashboard() {
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

@@ -1,57 +1,62 @@
-import React, { use, useContext, useEffect, useState } from 'react'
-import '../styles/style_header.css'
-import { Link, useNavigate } from 'react-router-dom'
-import { FirebaseContext } from '../context/firebase.jsx'
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FirebaseContext } from '../context/firebase.jsx';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 function Header() {
+  const context = useContext(FirebaseContext);
+  const [user, setUser] = useState(null);
 
-    const context = useContext(FirebaseContext);
+  useEffect(() => {
+    onAuthStateChanged(context.auth, user => {
+      setUser(user || null);
+    });
+  }, []);
 
-    const [user, setUser] = useState(null);
+  return (
+    <header className="w-full bg-[#fdf8f3] py-4 px-6 flex items-center justify-between shadow-sm">
+      {/* Logo */}
+      <Link to="/" className="text-2xl font-extrabold text-gray-900">
+        Bicycle
+      </Link>
 
-    useEffect(() => {
-        onAuthStateChanged(context.auth, user => {
-            if (user) {
-                setUser(user);
-            }
-            else {
-                setUser(null);
-            }
-        })
-    }, []);
+      {/* Navigation */}
+      <nav className="flex items-center gap-4">
+        <Link to="/about">
+          <button className="bg-[#00887A] hover:bg-[#006F65] text-white font-semibold py-2 px-6 rounded-full transition duration-200">
+            About
+          </button>
+        </Link>
 
-    return (
-        <div className="header ml-2 md:ml-[1.5rem]">
-            <Link to={'/'}>
-                <h1 className='logoname text-[1rem] md:text-[1.4rem] lg:text-[1.9rem]'>eASYCYCLE</h1>
-            </Link>
+        <Link to="/faqs">
+          <button className="bg-[#00887A] hover:bg-[#006F65] text-white font-semibold py-2 px-6 rounded-full transition duration-200">
+            FAQs
+          </button>
+        </Link>
 
-            <div className="navbar gap-2 md:gap-4 lg:gap-8">
-                <Link to={'/about'}>
-                    <h1 className='text-[1rem] md:text-[1.1rem] lg:text-[1.2rem]'>About</h1>
-                </Link>
-
-                <Link to={'/faqs'}>
-                    <h1 className='text-[1rem] md:text-[1.1rem] lg:text-[1.2rem]'>FAQs</h1>
-                </Link>
-            </div>
-
-            {
-                user ?
-                    <div className='flex justify-center items-center gap-4 w-auto h-auto'>
-                        <h1 className='hidden md:block lg:block font-bold text-black text-[1.3rem] font-[cursive]'>Hello, {user?.displayName}</h1>
-                        <button className='signinbtn w-auto h-auto p-1 text-[0.8rem] md:p-1.5 lg:p-2 md:text-[1rem] lg:text-[1.1rem]' onClick={() => {
-                            signOut(context.auth);
-                        }}>Log Out</button>
-                    </div>
-                    :
-                    <button className='signinbtn w-auto h-auto p-1 text-[0.8rem] md:p-1.5 lg:p-2 md:text-[1rem] lg:text-[1.1rem]' onClick={() => {
-                        context.signIn();
-                    }}>Sign In</button>
-            }
-        </div>
-    )
+        {user ? (
+          <>
+            <span className="hidden md:inline-block font-semibold text-gray-800">
+              Hello, {user.displayName}
+            </span>
+            <button
+              onClick={() => signOut(context.auth)}
+              className="bg-[#00887A] hover:bg-[#006F65] text-white font-semibold py-2 px-6 rounded-full transition duration-200"
+            >
+              Log Out
+            </button>
+          </>
+        ) : (
+          <button
+            onClick={() => context.signIn()}
+            className="bg-[#00887A] hover:bg-[#006F65] text-white font-semibold py-2 px-6 rounded-full transition duration-200"
+          >
+            Sign In
+          </button>
+        )}
+      </nav>
+    </header>
+  );
 }
 
 export default Header;
