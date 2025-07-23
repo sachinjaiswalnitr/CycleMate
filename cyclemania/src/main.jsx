@@ -4,9 +4,6 @@ import './index.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { FirebaseProvider } from './context/firebase.jsx'
 import App from './App.jsx'
-// import Header from './component/Header.jsx'
-import About from './component/About.jsx'
-import FAQs from './component/FAQs.jsx'
 import Footer from './component/Footer.jsx'
 import Dashboard from './component/Dashboard.jsx'
 import Lend_cycle from './component/Lend_cycle'
@@ -23,8 +20,6 @@ createRoot(document.getElementById('root')).render(
         <Toaster />
         <Routes>
           <Route path='/' element={<App />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/faqs' element={<FAQs />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/dashboard/lend_cycle' element={<Lend_cycle />} />
           <Route path='/dashboard/view_cycle' element={<View_cycle />} />
