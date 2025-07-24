@@ -124,24 +124,7 @@ function App() {
   </div>
   <div class="bg-[#E0F1EF] h-20"></div>
 </section>
-{/* 
-<section ref={aboutRef} className="bg-[#fffaf6] py-16 px-6 md:px-20 text-[#00332f] w-full">
-  <div className="max-w-5xl mx-auto">
-    <h2 className="text-3xl md:text-4xl font-bold text-[#006F65] mb-6">
-      About CycleMate
-    </h2>
-    <div className="text-lg md:text-xl leading-relaxed text-[#00332f] space-y-4">
-      <p>
-        🚴 CycleMate was created to solve one simple problem: getting around campus shouldn't be hard.
-        Whether you're heading to class, meeting friends, or fixing a flat – we've got your back.
-      </p>
-      <p>
-        Our platform lets you easily borrow a cycle, lend your own to others, or request quick repairs without
-        leaving the campus. We're building a self-sustaining cycle community for speed, convenience, and sustainability.
-      </p>
-    </div>
-  </div>
-</section> */}
+
 
 {/* FAQs Section */}
 <section ref={faqsRef} class="w-full">

@@ -109,6 +109,14 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
+.hamburger-line {
+  width: 24px;
+  height: 3px;
+  background-color: white;
+  margin: 3px 0;
+  transition: all 0.3s ease-in-out;
+  border-radius: 4px;
+}
 
 @layer base {
   * {
