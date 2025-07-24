@@ -1,69 +1,82 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { FirebaseContext } from '../context/firebase.jsx'
+import React, { useContext, useEffect, useState } from 'react';
+import { FirebaseContext } from '../context/firebase.jsx';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import { FaBicycle } from 'react-icons/fa';
 
 function View_cycle() {
+  const context = useContext(FirebaseContext);
+  const db = context.db;
+  const [cycle, setCycle] = useState(null);
+  const navigate = useNavigate();
 
-    const context = useContext(FirebaseContext);
-    const db = context.db;
-    const [cycle, setCycle] = useState(null);
-    const navigate = useNavigate();
+  useEffect(() => {
+    const fetchCycle = async () => {
+      const q = query(collection(db, "Lend"), where("present", "==", true));
+      const snapShot = await getDocs(q);
+      const allCycles = snapShot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setCycle(allCycles);
+    };
 
-    useEffect(() => {
-        const fetchCycle = async () => {
-            const q = query(collection(db, "Lend"), where("present", "==", true));
-            const snapShot = await getDocs(q);
-            const allCycles = snapShot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setCycle(allCycles);
-        }
+    fetchCycle();
+  }, [db]);
 
-        fetchCycle();
-    }, [db]);
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#bce0dc] to-[#c3e7e3] py-20 px-4 relative overflow-hidden">
+      {/* Decorative Wavy Background */}
+      <svg className="absolute top-0 left-0 w-full h-[50vh] z-0" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path
+          fill="#004f47"
+          fillOpacity="1"
+          d="M0,160 C360,320 1080,0 1440,160 L1440,0 L0,0 Z"
+        />
+      </svg>
 
-    // console.log(cycle);
+      <div className="relative bg-[#e6f2f1] shadow-2xl rounded-3xl p-10 max-w-6xl w-full mx-auto z-10">
+        <h1 className="text-3xl font-bold text-center text-[#007C7C] mb-10 flex items-center justify-center gap-3">
+          View Available Cycles <FaBicycle className="text-2xl text-[#007C7C]" />
+        </h1>
 
-    return (
-        <div className='w-[97%] h-auto mt-22 mb-10 relative ml-2 md:ml-5 flex flex-col items-center min-h-[34.5rem]'>
-            <h1 className='text-2xl md:text-4xl font-bold'>View Available Cycles 🚲</h1>
+        {cycle && cycle.length > 0 ? (
+          <div className="flex flex-col gap-8">
+            {cycle.map((item, idx) => (
+              <div
+                key={idx}
+                className="bg-white rounded-2xl p-6 shadow-md flex flex-col md:flex-row items-center gap-6 hover:shadow-xl transition"
+              >
+                <img
+                  src={item.imgURL}
+                  alt="cycle"
+                  className="w-64 h-40 md:w-72 md:h-48 rounded-xl object-cover"
+                />
+                <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-gray-800 w-full">
+                  <span className="font-semibold">Lender Name:</span> <span>{item.name}</span>
+                  <span className="font-semibold">Cycle ID:</span> <span>{item.cycleID}</span>
+                  <span className="font-semibold">Model:</span> <span>{item.cycleModel}</span>
+                  <span className="font-semibold">Hostel:</span> <span>{item.hostel}</span>
+                  <span className="font-semibold">Condition:</span> <span>{item.condition}</span>
+                  <span className="font-semibold">Available From:</span> <span>{item.available}</span>
+                  <span className="font-semibold">Notes:</span> <span>{item.notes}</span>
+                </div>
+              </div>
+            ))}
 
-            {
-                cycle ?
-                    <div className='h-auto w-full md:w-[90%] mt-10 flex flex-col justify-center items-center gap-10'>
-                        {
-                            cycle.map((item, idx) => (
-                                <div key={idx} className="w-[90%] bg-gray-200 rounded-2xl p-4 flex flex-col md:flex-row items-center justify-around gap-4 md:gap-12 transition-transform duration-300 transform hover:scale-103 hover:shadow-2xl hover:bg-red-100">
-                                    <img
-                                        src={item.imgURL}
-                                        alt="cycle_IMG"
-                                        className="w-60 h-40 md:w-80 md:h-52 rounded-2xl"
-                                    />
-
-                                    <div className="grid grid-cols-[auto_1fr] gap-x-2 gap-y-2 text-gray-800 text-sm md:text-base w-full max-w-xl">
-                                        <span className="font-semibold">Lender Name :</span> <span className="text-gray-600">{item.name}</span>
-                                        <span className="font-semibold">Cycle ID :</span> <span className="text-gray-600">{item.cycleID}</span>
-                                        <span className="font-semibold">Cycle Model :</span> <span className="text-gray-600">{item.cycleModel}</span>
-                                        <span className="font-semibold">Present Hostel :</span> <span className="text-gray-600">{item.hostel}</span>
-                                        <span className="font-semibold">Condition :</span> <span className="text-gray-600">{item.condition}</span>
-                                        <span className="font-semibold">Available From :</span> <span className="text-gray-600">{item.available}</span>
-                                        <span className="font-semibold">Description :</span> <span className="text-gray-600">{item.notes}</span>
-                                    </div>
-                                </div>
-                            ))
-                        }
-                        <button
-                            onClick={() => {
-                                setTimeout(() => {
-                                    navigate('/dashboard');
-                                }, 200);
-                            }}
-                            className='relative ml-[45%] md:ml-[77%] cursor-pointer text-[0.9rem] md:text-[1.1rem] hover:text-blue-700'>Back to Dashboard</button>
-                    </div>
-                    :
-                    <h1 className='text-2xl mt-10'>Currently No Available Cycles</h1>
-            }
-        </div>
-    )
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="mt-8 self-center flex items-center gap-2 px-6 py-3 bg-white text-[#007C7C] border border-[#007C7C] rounded-full font-semibold shadow-md hover:bg-[#e6f2f1] hover:text-[#005f5f] transition duration-300"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to Dashboard
+            </button>
+          </div>
+        ) : (
+          <h2 className="text-xl text-center text-gray-700">🚫 Currently No Available Cycles</h2>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default View_cycle;
