@@ -72,6 +72,7 @@ function Borrow_cycle() {
       });
 
       toast.success("Cycle bought successfully");
+      context.buyCycle();
       setHostel("");
       setReturnDate("");
       setReason("");

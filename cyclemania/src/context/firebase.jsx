@@ -1,4 +1,4 @@
-import {createContext} from 'react';
+import {createContext, useState} from 'react';
 import {initializeApp} from 'firebase/app'
 import {GoogleAuthProvider, getAuth, signInWithPopup} from 'firebase/auth'
 import {getFirestore} from 'firebase/firestore'
@@ -48,8 +48,35 @@ export const FirebaseProvider=(props)=>{
     })
   }
 
+  const [buy,setBuy]=useState(0);
+  const [sell,setSell]=useState(0);
+  const [lend,setLend]=useState(0);
+  const [borr,setBorr]=useState(0);
+  const [rep,setRep]=useState(0);
+
+  const sellCycle=()=>{
+    setSell(sell+1);
+  }
+
+  const buyCycle=()=>{
+    setBuy(buy+1);
+  }
+
+  const lendCycle=()=>{
+    setLend(lend+1);
+  }
+
+  const borCycle=()=>{
+    setBorr(borr+1);
+  }
+
+  const repCycle=()=>{
+    setRep(rep+1);
+  }
+  
+
   return(
-    <FirebaseContext.Provider value={{signIn, auth, db}}>
+    <FirebaseContext.Provider value={{signIn, auth, db, sellCycle, borCycle, lendCycle, buyCycle, repCycle, buy, sell, lend, borr, rep}}>
       {props.children}
     </FirebaseContext.Provider>
   )

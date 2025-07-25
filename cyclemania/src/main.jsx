@@ -4,7 +4,7 @@ import './index.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { FirebaseProvider } from './context/firebase.jsx'
 import App from './App.jsx'
-import Footer from './component/Footer.jsx'
+// import Footer from './component/Footer.jsx'
 import Dashboard from './component/Dashboard.jsx'
 import ViewProfile from './component/viewprofile'
 import ContactUs from './component/contactus'
@@ -34,8 +34,9 @@ createRoot(document.getElementById('root')).render(
           <Route path='/dashboard/repair_cycle' element={<Repair_cycle />} />
           <Route path='/dashboard/borrow_cycle' element={<Borrow_cycle />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>
     </FirebaseProvider>
   </StrictMode>,
 )
+
